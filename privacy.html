@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Privacy Policy — ClickSafe Content Agent</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="badge"><span class="yt-dot" aria-hidden="true"></span> Uses YouTube API Services</div>
+  <h1>Privacy Policy</h1>
+  <p class="small">Last updated: September 1, 2026</p>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>
+  </nav>
+</header>
+<main>
+  <section class="panel">
+    <h2>Scope</h2>
+    <p>ClickSafe Content Agent is a personal API client used by the owner of the ClickSafe Daily YouTube channel. It uses YouTube API Services and YouTube Analytics API data only for the authorized channel-management and content-production purposes described here.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Google and YouTube data accessed</h2>
+    <p>After Google OAuth authorization, the client may access:</p>
+    <ul>
+      <li>authorized YouTube channel identity, including channel ID and channel title;</li>
+      <li>video IDs, titles, descriptions, status/visibility and related upload metadata needed to upload or verify content;</li>
+      <li>channel/video analytics used by the client, such as views, estimated watch time, average view duration, average viewed percentage, likes, comments, shares and subscriber gains/losses;</li>
+      <li>OAuth authorization tokens required to perform the owner-authorized API operations.</li>
+    </ul>
+    <p>The client does <strong>not</strong> request, collect, or store the user's Google or YouTube password.</p>
+  </section>
+
+  <section class="panel">
+    <h2>How data is used</h2>
+    <ul>
+      <li>Confirm that API operations target the authorized ClickSafe Daily channel.</li>
+      <li>Upload and verify owner-authorized video content and metadata.</li>
+      <li>Measure performance and choose future topics from an owner-approved content plan.</li>
+      <li>Maintain limited operational history needed to prevent duplicate releases and audit automation behavior.</li>
+    </ul>
+    <p>Authorized YouTube API data is not sold. The client does not use YouTube API data for advertising or user profiling.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Storage and security</h2>
+    <p>OAuth credentials are stored as a protected GitHub Actions secret rather than in the source repository. Operational artifacts are minimized and configured for short retention. Repository access is restricted to the project owner and explicitly authorized tooling. Transport to Google/YouTube APIs uses HTTPS.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Third parties</h2>
+    <p>The client communicates with Google/YouTube to provide YouTube API functionality. Google processes information under the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>. The content-production pipeline may separately use external generation or media services for non-YouTube production inputs; YouTube-authorized account data is not intentionally sent to those services for advertising or profiling.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Revocation and deletion</h2>
+    <p>The owner can revoke the client's Google authorization from the Google Account permissions/security controls. After revocation, the OAuth secret can be deleted from GitHub Actions and locally generated token files can be deleted. Stored analytics snapshots, audit artifacts, and topic/history records derived for this client can also be deleted from the repository or Actions artifacts when no longer required.</p>
+    <p>If this client is ever made available to additional users, a clear request channel for deletion of their personal data will be provided before such access is enabled.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Consent and control</h2>
+    <p>YouTube write actions and visibility changes are performed only within the scope configured and expressly authorized by the channel owner. The automation can be disabled and authorization can be revoked at any time.</p>
+  </section>
+</main>
+<footer>
+  <p><a href="https://policies.google.com/privacy">Google Privacy Policy</a> · <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a></p>
+</footer>
+</body>
+</html>
