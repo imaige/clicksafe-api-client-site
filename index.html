@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ClickSafe Content Agent</title>
+  <meta name="description" content="ClickSafe Content Agent is a personal content-production and channel-management tool for ClickSafe Daily.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="badge"><span class="yt-dot" aria-hidden="true"></span> Uses YouTube API Services</div>
+  <h1>ClickSafe Content Agent</h1>
+  <p>A personal automation client for producing, quality-checking, uploading, and measuring educational cybersecurity content for the <strong>ClickSafe Daily</strong> channel.</p>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>
+  </nav>
+</header>
+<main>
+  <section class="panel">
+    <h2>What the client does</h2>
+    <ul>
+      <li>Reads the authorized channel's YouTube analytics and basic channel/video metadata.</li>
+      <li>Selects the next topic from an owner-approved content plan.</li>
+      <li>Generates an educational video package and applies fact-check and technical quality gates.</li>
+      <li>Uploads only to the explicitly authorized ClickSafe Daily YouTube channel.</li>
+      <li>Supports owner control over video title, description, audience designation, and visibility.</li>
+      <li>Uses YouTube API Services only after Google OAuth authorization.</li>
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>Owner control and YouTube actions</h2>
+    <p>YouTube write actions are associated with the authorized ClickSafe Daily channel. The client is configured by its owner with the intended upload cadence, content scope, metadata behavior, and final visibility. Automatic publication remains disabled until the applicable YouTube API compliance and OAuth readiness gates are satisfied.</p>
+    <p>The owner can stop the automation, change its publication mode, remove stored authorization, or revoke Google access at any time.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Upload certification</h2>
+    <p>Before upload functionality is enabled, the owner must certify that uploaded content complies with the YouTube Terms of Service, including the YouTube Community Guidelines, and must not violate the copyright or privacy rights of others.</p>
+    <p><a href="https://www.youtube.com/t/terms">Read the YouTube Terms of Service</a></p>
+  </section>
+
+  <section class="panel">
+    <h2>Data and privacy</h2>
+    <p>The client does not ask for or store a YouTube password. OAuth tokens are treated as secrets. See the <a href="privacy.html">Privacy Policy</a> for the exact YouTube/Google data accessed, storage and deletion practices, and revocation instructions.</p>
+  </section>
+</main>
+<footer>
+  <p>ClickSafe Content Agent is an independent API client and is not endorsed by YouTube or Google. YouTube is a trademark of Google LLC.</p>
+</footer>
+</body>
+</html>
