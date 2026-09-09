@@ -8,9 +8,9 @@
 </head>
 <body>
 <header>
-  <div class="badge"><span class="yt-dot" aria-hidden="true"></span> Uses YouTube API Services</div>
+  <div class="badge">ClickSafe API Client</div>
   <h1>Privacy Policy</h1>
-  <p class="small">Last updated: September 1, 2026</p>
+  <p class="small">Last updated: September 9, 2026</p>
   <nav aria-label="Primary">
     <a href="index.html">Home</a>
     <a href="privacy.html">Privacy Policy</a>
@@ -21,7 +21,7 @@
 <main>
   <section class="panel">
     <h2>Scope</h2>
-    <p>ClickSafe Content Agent is a personal API client used by the owner of the ClickSafe Daily YouTube channel. It uses YouTube API Services and YouTube Analytics API data only for the authorized channel-management and content-production purposes described here.</p>
+    <p>ClickSafe Content Agent is a content-production and publishing API client for the ClickSafe Daily workflow. It integrates with authorized platform APIs, including YouTube API Services and a TikTok Login Kit and Content Posting API Sandbox integration.</p>
   </section>
 
   <section class="panel">
@@ -29,47 +29,59 @@
     <p>After Google OAuth authorization, the client may access:</p>
     <ul>
       <li>authorized YouTube channel identity, including channel ID and channel title;</li>
-      <li>video IDs, titles, descriptions, status/visibility and related upload metadata needed to upload or verify content;</li>
+      <li>video IDs, titles, descriptions, status/visibility and upload metadata needed to upload or verify content;</li>
       <li>channel/video analytics used by the client, such as views, estimated watch time, average view duration, average viewed percentage, likes, comments, shares and subscriber gains/losses;</li>
-      <li>OAuth authorization tokens required to perform the owner-authorized API operations.</li>
+      <li>OAuth authorization tokens required to perform authorized API operations.</li>
     </ul>
-    <p>The client does <strong>not</strong> request, collect, or store the user's Google or YouTube password.</p>
+  </section>
+
+  <section class="panel">
+    <h2>TikTok data accessed</h2>
+    <p>When an authorized TikTok target user completes Login Kit authorization, the client may access only the scopes granted by that user. For the current Sandbox integration these include:</p>
+    <ul>
+      <li>basic TikTok account information allowed by <code>user.info.basic</code>, such as the account's open ID, display name and avatar;</li>
+      <li>OAuth authorization data needed to obtain and refresh server-side access tokens;</li>
+      <li>creator information required by the Content Posting API, including current creator username/nickname, available privacy options, interaction availability and maximum supported post duration;</li>
+      <li>posting authorization under <code>video.publish</code> only after the user grants that scope and confirms the applicable post choices.</li>
+    </ul>
+    <p>The client does not request the user's TikTok password. TikTok login is handled by TikTok.</p>
   </section>
 
   <section class="panel">
     <h2>How data is used</h2>
     <ul>
-      <li>Confirm that API operations target the authorized ClickSafe Daily channel.</li>
-      <li>Upload and verify owner-authorized video content and metadata.</li>
-      <li>Measure performance and choose future topics from an owner-approved content plan.</li>
+      <li>Confirm that API operations target the account that actually authorized the client.</li>
+      <li>Upload or publish owner-authorized video content and metadata.</li>
+      <li>Query current creator capabilities before TikTok posting so the UI can respect available privacy and interaction options.</li>
+      <li>Measure YouTube performance and support future topic selection from an approved content plan.</li>
       <li>Maintain limited operational history needed to prevent duplicate releases and audit automation behavior.</li>
     </ul>
-    <p>Authorized YouTube API data is not sold. The client does not use YouTube API data for advertising or user profiling.</p>
+    <p>Authorized platform data is not sold and is not used for advertising or unrelated user profiling.</p>
   </section>
 
   <section class="panel">
     <h2>Storage and security</h2>
-    <p>OAuth credentials are stored as a protected GitHub Actions secret rather than in the source repository. Operational artifacts are minimized and configured for short retention. Repository access is restricted to the project owner and explicitly authorized tooling. Transport to Google/YouTube APIs uses HTTPS.</p>
+    <p>OAuth client secrets, access tokens and refresh tokens are not embedded in the public website or browser-side JavaScript. Secret-bearing values are handled in protected server-side automation such as GitHub Actions secrets. Authorization codes are treated as short-lived credentials and are not intentionally exposed in application logs. Transport to platform APIs uses HTTPS.</p>
   </section>
 
   <section class="panel">
     <h2>Third parties</h2>
-    <p>The client communicates with Google/YouTube to provide YouTube API functionality. Google processes information under the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>. The content-production pipeline may separately use external generation or media services for non-YouTube production inputs; YouTube-authorized account data is not intentionally sent to those services for advertising or profiling.</p>
+    <p>The client communicates with the authorized platform providers required to deliver its features, including Google/YouTube and TikTok. Platform providers process information under their own privacy policies and terms. Production-media services may separately process non-account content inputs where needed for content generation, rendering or publishing.</p>
   </section>
 
   <section class="panel">
     <h2>Revocation and deletion</h2>
-    <p>The owner can revoke the client's Google authorization from the Google Account permissions/security controls. After revocation, the OAuth secret can be deleted from GitHub Actions and locally generated token files can be deleted. Stored analytics snapshots, audit artifacts, and topic/history records derived for this client can also be deleted from the repository or Actions artifacts when no longer required.</p>
-    <p>If this client is ever made available to additional users, a clear request channel for deletion of their personal data will be provided before such access is enabled.</p>
+    <p>Users can revoke platform authorization using the relevant account or app-permission controls. After authorization is revoked, stored OAuth credentials for that integration can be deleted from the protected server-side secret store. Locally generated token files, short-lived authorization material, analytics snapshots and operational artifacts can also be deleted when no longer required.</p>
+    <p>For the current TikTok Sandbox integration, removing the target user's authorization stops future API calls that depend on that authorization.</p>
   </section>
 
   <section class="panel">
     <h2>Consent and control</h2>
-    <p>YouTube write actions and visibility changes are performed only within the scope configured and expressly authorized by the channel owner. The automation can be disabled and authorization can be revoked at any time.</p>
+    <p>TikTok users may grant only a subset of requested scopes and may revoke access later. Before a TikTok Direct Post request, the client is designed to use current creator information, expose the available privacy and interaction choices, and require explicit confirmation for that post. The integration must stop if a required authorization or policy gate cannot be verified.</p>
   </section>
 </main>
 <footer>
-  <p><a href="https://policies.google.com/privacy">Google Privacy Policy</a> · <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a></p>
+  <p><a href="index.html">Home</a> · <a href="terms.html">Terms of Use</a> · <a href="https://policies.google.com/privacy">Google Privacy Policy</a></p>
 </footer>
 </body>
 </html>
