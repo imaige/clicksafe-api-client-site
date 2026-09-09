@@ -23,7 +23,11 @@
     <p id="status-message">Please keep this page open while the authorization response is checked.</p>
     <div id="details" hidden>
       <p><strong>Authorization code received:</strong> <span id="code-status">No</span></p>
-      <p><strong>State received:</strong> <span id="state-status">No</span></p>
+      <p><strong>OAuth state verified:</strong> <span id="state-status">No</span></p>
+      <p><strong>Scopes returned:</strong> <span id="scope-status">Not reported</span></p>
+      <button id="copy-code" type="button">Copy one-time authorization code</button>
+      <p id="copy-status" class="small" aria-live="polite"></p>
+      <p class="small">Paste the copied value directly into the GitHub Actions secret named <strong>TIKTOK_SANDBOX_AUTH_CODE</strong>. Do not paste it into chat or commit it to the repository.</p>
       <p>This page never requests or displays your TikTok password, client secret, access token, or refresh token.</p>
     </div>
   </section>
@@ -35,12 +39,17 @@
 (function () {
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
-  const state = params.get('state');
+  const returnedState = params.get('state');
+  const returnedScopes = params.get('scopes');
   const error = params.get('error');
   const errorDescription = params.get('error_description');
+  const expectedState = sessionStorage.getItem('clicksafe_tiktok_oauth_state');
+  const startedAt = Number(sessionStorage.getItem('clicksafe_tiktok_oauth_started_at') || '0');
   const title = document.getElementById('status-title');
   const message = document.getElementById('status-message');
   const details = document.getElementById('details');
+  const copyButton = document.getElementById('copy-code');
+  const copyStatus = document.getElementById('copy-status');
 
   if (error) {
     title.textContent = 'TikTok authorization was not completed';
@@ -48,17 +57,42 @@
     return;
   }
 
-  if (code) {
-    title.textContent = 'TikTok authorization response received';
-    message.textContent = 'The authorization code was returned to the registered ClickSafe callback. Token exchange is handled separately on the secure server-side flow.';
-    document.getElementById('code-status').textContent = 'Yes';
-    document.getElementById('state-status').textContent = state ? 'Yes' : 'No';
-    details.hidden = false;
+  if (!code) {
+    title.textContent = 'TikTok authorization callback ready';
+    message.textContent = 'No authorization code was returned. Start the flow from the registered ClickSafe sandbox authorization page.';
     return;
   }
 
-  title.textContent = 'TikTok authorization callback ready';
-  message.textContent = 'This registered HTTPS endpoint is ready to receive TikTok OAuth authorization responses.';
+  if (!expectedState || !returnedState || expectedState !== returnedState) {
+    title.textContent = 'TikTok authorization response rejected';
+    message.textContent = 'OAuth state validation failed. Do not use this authorization code. Start a new authorization flow.';
+    return;
+  }
+
+  if (startedAt && Date.now() - startedAt > 15 * 60 * 1000) {
+    title.textContent = 'TikTok authorization response expired locally';
+    message.textContent = 'This browser flow is older than 15 minutes. Start a new authorization flow before exchanging the code.';
+    return;
+  }
+
+  title.textContent = 'TikTok authorization response verified';
+  message.textContent = 'The authorization code was returned to the registered ClickSafe callback and the OAuth state matched. Token exchange will run only in the secure GitHub Actions server-side flow.';
+  document.getElementById('code-status').textContent = 'Yes';
+  document.getElementById('state-status').textContent = 'Yes';
+  document.getElementById('scope-status').textContent = returnedScopes || 'Not reported by callback';
+  details.hidden = false;
+
+  copyButton.addEventListener('click', async function () {
+    try {
+      await navigator.clipboard.writeText(code);
+      copyStatus.textContent = 'Authorization code copied. Add it directly to the GitHub Actions secret now.';
+      sessionStorage.removeItem('clicksafe_tiktok_oauth_state');
+      sessionStorage.removeItem('clicksafe_tiktok_oauth_started_at');
+      copyButton.disabled = true;
+    } catch (err) {
+      copyStatus.textContent = 'Clipboard access failed. Do not expose the code in chat. Restart the flow in a browser that allows clipboard access.';
+    }
+  });
 })();
 </script>
 </body>
