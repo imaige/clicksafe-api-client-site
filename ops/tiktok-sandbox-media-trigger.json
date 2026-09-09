@@ -1,5 +1,5 @@
 {
-  "attempt": 1,
-  "purpose": "Generate a clean, non-promotional MP4 for TikTok Sandbox Direct Post testing.",
+  "attempt": 2,
+  "purpose": "Generate a clean, non-promotional MP4 for TikTok Sandbox Direct Post testing after installing FFmpeg.",
   "target": "tiktok-sandbox-test.mp4"
 }
