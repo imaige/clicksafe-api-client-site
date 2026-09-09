@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>ClickSafe Content Agent</title>
-  <meta name="description" content="ClickSafe Content Agent is a personal content-production and channel-management tool for ClickSafe Daily.">
+  <meta name="description" content="ClickSafe Content Agent is a web-based content-production and publishing client for the ClickSafe Daily cybersecurity media workflow.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
-  <div class="badge"><span class="yt-dot" aria-hidden="true"></span> Uses YouTube API Services</div>
+  <div class="badge">ClickSafe API Client</div>
   <h1>ClickSafe Content Agent</h1>
-  <p>A personal automation client for producing, quality-checking, uploading, and measuring educational cybersecurity content for the <strong>ClickSafe Daily</strong> channel.</p>
+  <p>A web-based automation client for producing, quality-checking, publishing, and measuring educational cybersecurity content for <strong>ClickSafe Daily</strong>.</p>
   <nav aria-label="Primary">
     <a href="index.html">Home</a>
     <a href="privacy.html">Privacy Policy</a>
@@ -23,34 +23,38 @@
   <section class="panel">
     <h2>What the client does</h2>
     <ul>
-      <li>Reads the authorized channel's YouTube analytics and basic channel/video metadata.</li>
-      <li>Selects the next topic from an owner-approved content plan.</li>
-      <li>Generates an educational video package and applies fact-check and technical quality gates.</li>
-      <li>Uploads only to the explicitly authorized ClickSafe Daily YouTube channel.</li>
-      <li>Supports owner control over video title, description, audience designation, and visibility.</li>
-      <li>Uses YouTube API Services only after Google OAuth authorization.</li>
+      <li>Reads authorized YouTube channel analytics and basic channel/video metadata.</li>
+      <li>Selects topics from an approved content plan and produces educational video packages with fact-check and technical quality gates.</li>
+      <li>Publishes authorized content to the ClickSafe Daily YouTube and Instagram accounts under account-identity and publication-verification controls.</li>
+      <li>Uses TikTok Login Kit in Sandbox to let an authorized target user grant only the requested permissions.</li>
+      <li>Uses TikTok Content Posting API in Sandbox to query current creator capabilities and test an owner-confirmed posting flow.</li>
     </ul>
   </section>
 
   <section class="panel">
-    <h2>Owner control and YouTube actions</h2>
-    <p>YouTube write actions are associated with the authorized ClickSafe Daily channel. The client is configured by its owner with the intended upload cadence, content scope, metadata behavior, and final visibility. Automatic publication remains disabled until the applicable YouTube API compliance and OAuth readiness gates are satisfied.</p>
-    <p>The owner can stop the automation, change its publication mode, remove stored authorization, or revoke Google access at any time.</p>
+    <h2>TikTok authorization and posting flow</h2>
+    <p>The TikTok integration uses OAuth through TikTok Login Kit. The registered callback receives an authorization response, validates the returned state value, and leaves client-secret and token exchange operations to the server-side workflow.</p>
+    <p>Before any TikTok Direct Post request, the client queries current creator information, presents the available privacy and interaction options, and requires an explicit confirmation for that post. Sandbox testing remains restricted by TikTok's unaudited-client rules.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Owner and user control</h2>
+    <p>Write actions are limited to an account that has explicitly authorized the client. The authorized user controls the applicable TikTok privacy and interaction choices before a post is sent. Authorization can be revoked and the automation can be disabled at any time.</p>
   </section>
 
   <section class="panel">
     <h2>Upload certification</h2>
-    <p>Before upload functionality is enabled, the owner must certify that uploaded content complies with the YouTube Terms of Service, including the YouTube Community Guidelines, and must not violate the copyright or privacy rights of others.</p>
+    <p>Before upload functionality is enabled, the operator must confirm that uploaded content complies with the destination platform's applicable terms, community rules, copyright requirements, and privacy rights.</p>
     <p><a href="https://www.youtube.com/t/terms">Read the YouTube Terms of Service</a></p>
   </section>
 
   <section class="panel">
     <h2>Data and privacy</h2>
-    <p>The client does not ask for or store a YouTube password. OAuth tokens are treated as secrets. See the <a href="privacy.html">Privacy Policy</a> for the exact YouTube/Google data accessed, storage and deletion practices, and revocation instructions.</p>
+    <p>The client does not request or store a YouTube, Google, Instagram, Facebook, or TikTok password. OAuth credentials are treated as secrets and are not embedded in public browser-side code. See the <a href="privacy.html">Privacy Policy</a> for details about account data, storage, deletion, and revocation.</p>
   </section>
 </main>
 <footer>
-  <p>ClickSafe Content Agent is an independent API client and is not endorsed by YouTube or Google. YouTube is a trademark of Google LLC.</p>
+  <p>ClickSafe Content Agent is an independent API client and is not endorsed by YouTube, Google, Meta, Instagram, or TikTok.</p>
 </footer>
 </body>
 </html>
