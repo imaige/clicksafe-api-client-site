@@ -17,6 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+
       - name: Build clean sandbox MP4
         run: |
           ffmpeg -y \
