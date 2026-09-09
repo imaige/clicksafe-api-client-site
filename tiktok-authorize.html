@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TikTok Sandbox Authorization | ClickSafe Content Agent</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>ClickSafe Content Agent</h1>
+  <p>TikTok Sandbox authorization</p>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+  </nav>
+</header>
+<main>
+  <section class="panel">
+    <h2>Authorize the ClickSafe Review Sandbox</h2>
+    <p>This page starts TikTok Login Kit OAuth for the sandbox test account. It never asks for or stores the TikTok client secret, password, access token, or refresh token.</p>
+    <p><strong>Expected sandbox TikTok account:</strong> @clicksafedailyhq</p>
+
+    <label for="client-key"><strong>Sandbox Client Key</strong></label>
+    <input id="client-key" type="text" autocomplete="off" spellcheck="false" style="width:100%;max-width:720px;padding:.7rem;margin:.5rem 0 1rem">
+    <p class="small">Enter the Client Key shown in TikTok for Developers. Do not enter the Client Secret here.</p>
+
+    <button id="authorize-button" type="button">Continue with TikTok</button>
+    <p id="status-message" class="small" aria-live="polite"></p>
+  </section>
+</main>
+<footer>
+  <p>ClickSafe Content Agent is an independent API client and is not endorsed by TikTok.</p>
+</footer>
+<script>
+(function () {
+  const redirectUri = 'https://imaige.github.io/clicksafe-api-client-site/tiktok-callback.html';
+  const scopes = 'user.info.basic,video.publish';
+  const button = document.getElementById('authorize-button');
+  const input = document.getElementById('client-key');
+  const status = document.getElementById('status-message');
+
+  function randomState() {
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  button.addEventListener('click', function () {
+    const clientKey = input.value.trim();
+    if (!clientKey) {
+      status.textContent = 'Sandbox Client Key is required.';
+      return;
+    }
+
+    const state = randomState();
+    sessionStorage.setItem('clicksafe_tiktok_oauth_state', state);
+    sessionStorage.setItem('clicksafe_tiktok_oauth_started_at', String(Date.now()));
+
+    const authorizeUrl = new URL('https://www.tiktok.com/v2/auth/authorize/');
+    authorizeUrl.searchParams.set('client_key', clientKey);
+    authorizeUrl.searchParams.set('scope', scopes);
+    authorizeUrl.searchParams.set('response_type', 'code');
+    authorizeUrl.searchParams.set('redirect_uri', redirectUri);
+    authorizeUrl.searchParams.set('state', state);
+
+    window.location.assign(authorizeUrl.toString());
+  });
+})();
+</script>
+</body>
+</html>
