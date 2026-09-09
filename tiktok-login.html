@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TikTok Sandbox Authorization | ClickSafe Content Agent</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="badge">TikTok Sandbox</div>
+  <h1>ClickSafe Content Agent</h1>
+  <p>Start a secure TikTok Login Kit authorization for the ClickSafe Review Sandbox.</p>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+  </nav>
+</header>
+<main>
+  <section class="panel">
+    <h2>Authorize the sandbox target account</h2>
+    <p>This page starts TikTok's official Web Login Kit OAuth flow. The TikTok Client Secret is never used or stored in this browser page.</p>
+
+    <label for="client-key"><strong>Sandbox Client key</strong></label>
+    <input id="client-key" type="password" autocomplete="off" spellcheck="false" aria-describedby="client-key-help" style="display:block;width:100%;max-width:720px;margin:.5rem 0 1rem;padding:.75rem;box-sizing:border-box">
+    <p id="client-key-help" class="small">Enter the Sandbox Client key from TikTok Developer Portal. It is used only to build the TikTok authorization URL for this browser session and is not written to this site.</p>
+
+    <p><strong>Requested scopes:</strong> <code>user.info.basic,video.publish</code></p>
+    <p><strong>Registered callback:</strong> <code>https://imaige.github.io/clicksafe-api-client-site/tiktok-callback.html</code></p>
+
+    <button id="authorize" type="button">Continue with TikTok</button>
+    <p id="status" class="small" aria-live="polite"></p>
+  </section>
+
+  <section class="panel">
+    <h2>Security notes</h2>
+    <ul>
+      <li>A cryptographically random OAuth <code>state</code> value is generated for each authorization attempt.</li>
+      <li>The state value is kept only in this browser session and is verified by the registered callback.</li>
+      <li>Authorization-code exchange and all Client Secret handling occur only in the secure server-side GitHub Actions flow.</li>
+      <li>No TikTok access token or refresh token is displayed by this page.</li>
+    </ul>
+  </section>
+</main>
+<footer>
+  <p>ClickSafe Content Agent is an independent API client and is not endorsed by TikTok.</p>
+</footer>
+<script>
+(function () {
+  const AUTH_URL = 'https://www.tiktok.com/v2/auth/authorize/';
+  const REDIRECT_URI = 'https://imaige.github.io/clicksafe-api-client-site/tiktok-callback.html';
+  const SCOPES = 'user.info.basic,video.publish';
+
+  const clientKeyInput = document.getElementById('client-key');
+  const authorizeButton = document.getElementById('authorize');
+  const status = document.getElementById('status');
+
+  function randomState() {
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  authorizeButton.addEventListener('click', function () {
+    const clientKey = clientKeyInput.value.trim();
+    if (!clientKey || clientKey.length < 5 || clientKey.length > 255 || /\s/.test(clientKey)) {
+      status.textContent = 'Enter the Sandbox Client key exactly as shown in TikTok Developer Portal.';
+      return;
+    }
+
+    const state = randomState();
+    sessionStorage.setItem('clicksafe_tiktok_oauth_state', state);
+    sessionStorage.setItem('clicksafe_tiktok_oauth_started_at', String(Date.now()));
+
+    const params = new URLSearchParams({
+      client_key: clientKey,
+      response_type: 'code',
+      scope: SCOPES,
+      redirect_uri: REDIRECT_URI,
+      state: state
+    });
+
+    clientKeyInput.value = '';
+    status.textContent = 'Redirecting to TikTok for authorization…';
+    window.location.assign(AUTH_URL + '?' + params.toString());
+  });
+})();
+</script>
+</body>
+</html>
