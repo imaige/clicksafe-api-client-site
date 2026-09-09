@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TikTok Authorization Callback | ClickSafe Content Agent</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>ClickSafe Content Agent</h1>
+  <p>TikTok authorization callback</p>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+  </nav>
+</header>
+<main>
+  <section class="panel">
+    <h2 id="status-title">Processing TikTok authorization…</h2>
+    <p id="status-message">Please keep this page open while the authorization response is checked.</p>
+    <div id="details" hidden>
+      <p><strong>Authorization code received:</strong> <span id="code-status">No</span></p>
+      <p><strong>State received:</strong> <span id="state-status">No</span></p>
+      <p>This page never requests or displays your TikTok password, client secret, access token, or refresh token.</p>
+    </div>
+  </section>
+</main>
+<footer>
+  <p>ClickSafe Content Agent is an independent API client and is not endorsed by TikTok.</p>
+</footer>
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const state = params.get('state');
+  const error = params.get('error');
+  const errorDescription = params.get('error_description');
+  const title = document.getElementById('status-title');
+  const message = document.getElementById('status-message');
+  const details = document.getElementById('details');
+
+  if (error) {
+    title.textContent = 'TikTok authorization was not completed';
+    message.textContent = errorDescription || error;
+    return;
+  }
+
+  if (code) {
+    title.textContent = 'TikTok authorization response received';
+    message.textContent = 'The authorization code was returned to the registered ClickSafe callback. Token exchange is handled separately on the secure server-side flow.';
+    document.getElementById('code-status').textContent = 'Yes';
+    document.getElementById('state-status').textContent = state ? 'Yes' : 'No';
+    details.hidden = false;
+    return;
+  }
+
+  title.textContent = 'TikTok authorization callback ready';
+  message.textContent = 'This registered HTTPS endpoint is ready to receive TikTok OAuth authorization responses.';
+})();
+</script>
+</body>
+</html>
